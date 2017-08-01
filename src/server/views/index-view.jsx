@@ -6,11 +6,19 @@ import ReduxRouterEngine from 'electrode-redux-router-engine';
 import {routes} from '../../client/routes';
 import {createStore} from 'redux';
 import rootReducer from '../../client/reducers';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import {generateProduct} from '../data/generator';
+import {config} from 'electrode-confippet';
 
 const Promise = require('bluebird');
 
 function createReduxStore(req, match) { // eslint-disable-line
   const initialState = {
+    product:
+      generateProduct(
+          match.renderProps.params.id || 0,
+          config.app.server.generator
+          )
   };
 
   const store = createStore(rootReducer, initialState);
@@ -28,8 +36,13 @@ function createReduxStore(req, match) { // eslint-disable-line
 //
 
 module.exports = (req) => {
+
+  global.navigator = global.navigator || {};
+  global.navigator.userAgent = req.headers['user-agent'] || 'all';
+
   const app = req.server && req.server.app || req.app;
   if (!app.routesEngine) {
+    injectTapEventPlugin();
     app.routesEngine = new ReduxRouterEngine({routes, createReduxStore});
   }
 

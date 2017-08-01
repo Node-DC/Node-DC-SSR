@@ -1,3 +1,5 @@
 {
-  "extends": "electrode-archetype-react-app-dev/config/babel/babelrc-server"
+  "extends": "electrode-archetype-react-app-dev/config/babel/babelrc-server",
+  "plugins": ["transform-class-properties"],
+  "presets": ['react']
 }

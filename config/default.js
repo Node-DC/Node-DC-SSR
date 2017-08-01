@@ -19,6 +19,9 @@ module.exports = {
         'pathPrefix': 'dist'
       }
     },
+    'fakecdn': {
+      module: './{{env.APP_SRC_DIR}}server/plugins/fakecdn',
+    },
     'webapp': {
       'module': 'electrode-react-webapp/lib/hapi',
       'options': {
@@ -43,6 +46,13 @@ module.exports = {
       },
       'state': {
         'ignoreErrors': true
+      }
+    }
+  },
+  app: {
+    server: {
+      generator: {
+        cache: true
       }
     }
   }
