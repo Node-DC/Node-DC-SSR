@@ -8,8 +8,12 @@ support.cssModuleHook({
   generateScopedName: '[name]__[local]___[hash:base64:5]'
 });
 
+const {runMe} = require('./views/direct-mode');
+
 support.load({
   isomorphicExtendRequire: true
 }).then(() => {
-  require('./views/direct-mode');
+    runMe();
+}).catch(ex => {
+  console.log(ex);
 });
