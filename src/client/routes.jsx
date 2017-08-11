@@ -17,7 +17,7 @@ export const routes = (
     <IndexRoute component={Home}/>
     <Route path="product(/:id)" component={Product}/>
     <Route path="random(/:id)" component={Random}/>
-    <Route path="count(/:count)" component={Count}/>
+    <Route path="count(/:count(/:depth))" component={Count}/>
     <Route path="*" component={FourOhFour}/>
   </Route>
 );

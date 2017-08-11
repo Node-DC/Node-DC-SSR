@@ -86,10 +86,11 @@ user-agent: ${args.userAgent}`);
         }
         const time = process.hrtime();
         for(let ii = 0; ii < count; ++ii) {
-          renderToString(
+          var html = renderToString(
             <Provider store={store}>
               <RouterContext {...renderProps} />
             </Provider>);
+          //console.log(html);
         }
         const [sec, ns] = process.hrtime(time);
         const total = sec + ns/NS_PER_SEC;

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class RandomTags extends React.Component {
+export default class TagCount extends React.Component {
   static propTypes = {
     count: PropTypes.number,
     depth: PropTypes.number,
@@ -29,20 +29,23 @@ export default class RandomTags extends React.Component {
     if(children.length > 0) {
       return React.createElement(node, null, ...children);
     } else {
-      return leaf;
+      return React.createElement(node, null, leaf);
     }
   }
 
-  generateTagsHelper(curdepth, children) {
-    const {depth} = this.props;
+  generateTagsHelper(curdepth, children, genState) {
+    const {count, depth} = this.props;
 
     if(curdepth >= depth) {
       return this.createTag([]);
     }
 
-    const elems = new Array(children);
-    for(let ii = 0; ii < children; ++ii) {
-      elems[ii] = this.generateTagsHelper(curdepth + 1, children);
+    const newChildren = Math.max(0, Math.min(children, count - genState.count));
+    genState.count += newChildren;
+
+    const elems = new Array(newChildren);
+    for(let ii = 0; ii < newChildren; ++ii) {
+      elems[ii] = this.generateTagsHelper(curdepth + 1, children, genState);
     }
 
     return this.createTag(elems);
@@ -51,30 +54,36 @@ export default class RandomTags extends React.Component {
   generateTags() {
     const {depth, node, count} = this.props;
 
-    let children = 0;
+    let children = 2;
 
-    for(children = 0; ; ++children) {
+    for(; ; ++children) {
       let nc = (Math.pow(children, depth + 1) - 1) / (children - 1);
       if(nc >= count) {
         break;
       }
     }
 
-    return React.createElement(node, null,
-      this.generateTagsHelper(0, children));
+    const genState = {count: 1};
+
+    const tags = React.createElement(node, null,
+      this.generateTagsHelper(0, children, genState));
+
+    console.log('[TagCount] generated', genState.count, 'children');
+
+    return tags;
   }
 
   render() {
-    const {useCache, count, depth} = this.props;
-    const key = count + ' ' + depth;
-    if(useCache && RandomTags.cache[key]) {
-      return RandomTags.cache[key];
+    const {useCache, count, depth, node, leaf} = this.props;
+    const key = [count, depth, node, leaf].join('<=>');
+    if(useCache && TagCount.cache[key]) {
+      return TagCount.cache[key];
     }
 
     const tags = this.generateTags();
 
     if(useCache) {
-      RandomTags.cache[key] = tags;
+      TagCount.cache[key] = tags;
     }
 
     return tags;
