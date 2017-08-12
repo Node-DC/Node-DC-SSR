@@ -19,7 +19,7 @@ export default class TagCount extends React.Component {
     depth: 7,
     node: 'div',
     leaf: '.',
-    useCache: true
+    useCache: false
   };
 
   static cache = {};
@@ -68,16 +68,17 @@ export default class TagCount extends React.Component {
     const tags = React.createElement(node, null,
       this.generateTagsHelper(0, children, genState));
 
-    console.log('[TagCount] generated', genState.count, 'children');
-
     return tags;
   }
 
   render() {
     const {useCache, count, depth, node, leaf} = this.props;
-    const key = [count, depth, node, leaf].join('<=>');
-    if(useCache && TagCount.cache[key]) {
-      return TagCount.cache[key];
+    let key;
+    if(useCache) {
+      key = [count, depth, node, leaf].join('<=>');
+      if(TagCount.cache[key]) {
+        return TagCount.cache[key];
+      }
     }
 
     const tags = this.generateTags();
