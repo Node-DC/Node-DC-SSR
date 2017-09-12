@@ -1,0 +1,37 @@
+{
+"client_params": 
+  { 
+    "MT_interval" : "100",
+    "request" : "10000",
+    "concurrency" : "200",
+    "run_mode" : "1",
+    "interval" : "10",
+    "rampup_rampdown": "25",
+    "tempfile":"RTdata",
+    "total_urls":"100",
+    "server_ipaddress":"localhost",
+    "server_port":"9000",
+    "root_endpoint": "/",
+    "nameurl_count":"25", 
+    "zipurl_count":"25",
+    "idurl_count":"50",
+    "html": false
+  },
+"db_params": 
+  { 
+    "dbrecord_count": "10000", 
+    "name_ratio":"5",
+    "zip_ratio":"5"
+  },
+"url_params": 
+  { 
+    "get_ratio": "90", 
+    "post_ratio":"5",
+    "delete_ratio":"5"
+  },
+"memory_params": 
+  { 
+    "memstat_interval": "1", 
+    "memlogfile": "memlog_file"
+  }
+}
