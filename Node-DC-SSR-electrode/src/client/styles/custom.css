@@ -1,0 +1,18 @@
+.container {
+  max-width: 800px;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Larger than tablet */
+@media (min-width: 750px) {
+  /* Re-overiding the width 100% declaration to match size of % based container */
+  .container {
+    width: 80%;
+  }
+}
+
+img {
+  vertical-align: text-bottom;
+}
