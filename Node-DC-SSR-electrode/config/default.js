@@ -22,6 +22,9 @@ module.exports = {
     'fakecdn': {
       module: './{{env.APP_SRC_DIR}}server/plugins/fakecdn',
     },
+    'json-api': {
+      module: './{{env.APP_SRC_DIR}}server/plugins/json-api',
+    },
     'webapp': {
       'module': 'electrode-react-webapp/lib/hapi',
       'options': {
@@ -50,6 +53,7 @@ module.exports = {
     }
   },
   app: {
+    app_mode: 'Node-DC-SSR-electrode',
     server: {
       generator: {
         cache: true
