@@ -1,0 +1,26 @@
+{
+"client_params": 
+  { 
+    "MT_interval" : "100",
+    "request" : "10000",
+    "concurrency" : "200",
+    "run_mode" : "1",
+    "interval" : "10",
+    "rampup_rampdown": "25",
+    "tempfile": "RTdata",
+    "total_urls": "100",
+    "server_ipaddress": "localhost",
+    "server_port": "3000",
+    "root_endpoint": "/",
+    "no_db": true,
+    "get_endpoints": [
+      "count/10000/15"
+    ],
+    "html": false
+  },
+"memory_params": 
+  { 
+    "memstat_interval": "1", 
+    "memlogfile": "memlog_file"
+  }
+}
