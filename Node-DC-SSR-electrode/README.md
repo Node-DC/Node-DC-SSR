@@ -3,5 +3,5 @@
 
 ## License
 
-Apache-2.0 © [Enrico Galli]()
+Apache-2.0 © [Intel Corporation]()
 
