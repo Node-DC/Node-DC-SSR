@@ -8,6 +8,8 @@ const portFromEnv = () => {
   return (x !== null && !isNaN(x)) ? x : defaultListenPort;
 };
 
+const appName = 'Node-DC-SSR-electrode';
+
 module.exports = {
   'plugins': {
     'inert': {
@@ -28,7 +30,7 @@ module.exports = {
     'webapp': {
       'module': 'electrode-react-webapp/lib/hapi',
       'options': {
-        'pageTitle': 'Node-DC-SSR-electrode',
+        'pageTitle': appName,
         'paths': {
           '/{args*}': {
             'content': {
@@ -53,7 +55,8 @@ module.exports = {
     }
   },
   app: {
-    app_mode: 'Node-DC-SSR-electrode',
+    appMode: 'SSR-electrode',
+    appVersion: appName + ' v0.8.0',
     server: {
       generator: {
         cache: true

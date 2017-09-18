@@ -44,7 +44,8 @@ plugin.register = function (server, options, next) {
         type: os.type(),
         uptime: os.uptime()
       },
-      appName: config.app.app_mode,
+      appName: config.app.appMode,
+      appVersion: config.app.appVersion,
       version: process.versions
     });
   }
