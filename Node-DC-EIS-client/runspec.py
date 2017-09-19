@@ -285,7 +285,7 @@ def main():
                       help='Skips all database loading and checking actions')
 
   parser.add_argument('-ge', '--get-endpoints', nargs='+',
-                      help='Directly specific which endpoints to use during'
+                      help='Directly specific which endpoints to use during '
                       'GET operations (bypasses id, name, and zip ratios)')
 
   def header_check(value):
