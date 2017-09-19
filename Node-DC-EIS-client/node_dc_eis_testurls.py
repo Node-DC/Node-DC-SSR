@@ -83,7 +83,7 @@ def get_ip(hostname):
   ip_cache[hostname] = ip
   return ip
 
-def get_url(url, url_type, request_num, phase, accept_header):
+def get_url(url, url_type, request_num, phase, accept_header, http_headers):
   """
   # Desc  : Function to send get requests to the server. Type 1 is get requests
   #         handles 3 types of GET requests based on ID, last_name and zipcode.
@@ -108,12 +108,12 @@ def get_url(url, url_type, request_num, phase, accept_header):
 
   req_path = '{}{}'.format(urlo.path, query)
 
-  req = '''GET {} HTTP/1.1
-Host: {}
-User-Agent: runspec/0.9
-Accept: {}
-
-'''.format(req_path, urlo.netloc, accept_header)
+  req = '''GET {} HTTP/1.1\r
+Host: {}\r
+Accept: {}\r
+{}\r
+'''.format(req_path, urlo.netloc,
+           accept_header, ''.join(hh + '\r\n' for hh in http_headers))
 
   try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -352,7 +352,7 @@ def clean_up_log(queue):
   log = None
 
 def main_entry(url, request_num, url_type, log_dir, phase, interval,
-               run_mode, temp_log, accept_header, queue):
+               run_mode, temp_log, accept_header, queue, http_headers):
   """
   # Desc  : main entry function to determine the type of url - GET,POST or DELETE
   #         creates log file which captures per request data depending on the type of run.
@@ -391,7 +391,7 @@ def main_entry(url, request_num, url_type, log_dir, phase, interval,
       sys.exit(1)
 
   if url_type == 1:
-    get_url(url, url_type, request_num, phase, accept_header)
+    get_url(url, url_type, request_num, phase, accept_header, http_headers)
   if url_type == 2:
     post_url(url, url_type, request_num, phase)
   if url_type == 3:

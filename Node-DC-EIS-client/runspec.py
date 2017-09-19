@@ -85,6 +85,8 @@ memlogind = "requestsdone.ind"
 cpuCount = -1
 run_mode = 1
 
+http_headers = []
+
 """
 #  Database parameters - defaults
 """
@@ -250,7 +252,7 @@ def main():
                   action="store",
                   help='Number of rampup-rampdown requests to perform')
   parser.add_argument('-r','--run_mode',dest="run_mode",
-                  action="store",
+                  action="store", choices=[1, 2], type=int,
                   help='1 for time based run. 2 for request based run. Default is 1')
   parser.add_argument('-int','--interval',dest="interval",action="store",         
                   help='Interval after which logging switches to next temp log file')
@@ -285,6 +287,16 @@ def main():
   parser.add_argument('-ge', '--get-endpoints', nargs='+',
                       help='Directly specific which endpoints to use during'
                       'GET operations (bypasses id, name, and zip ratios)')
+
+  def header_check(value):
+    header = [ss.strip() for ss in value.split(':', 1)]
+    if len(header) != 2:
+      raise argparse.ArgumentTypeError('"%s" is not of the form '
+                                       '"key: value"' % value)
+    return ': '.join(header)
+
+  parser.add_argument('-hh', '--http-headers', nargs='+', type=header_check,
+                      help='Extra HTTP headers to send to the server')
 
   options = parser.parse_args()
 
@@ -399,6 +411,16 @@ def main():
           if "get_endpoints" in json_data["client_params"]:
             get_endpoints = json_data["client_params"]["get_endpoints"]
 
+          if "http_headers" in json_data["client_params"]:
+            try:
+              headers = [header_check(hh)
+                          for hh in json_data["client_params"]["http_headers"]]
+            except Exception as e:
+              print 'Error: http_headers: %s' % e
+              sys.exit(1)
+
+            http_headers.extend(headers)
+
         #database setup parameters
         if "db_params" in json_data:
           if "dbrecord_count" in json_data["db_params"]:
@@ -497,6 +519,9 @@ def main():
   if options.get_endpoints:
     get_endpoints = options.get_endpoints
 
+  if options.http_headers:
+    http_headers.extend(options.http_headers)
+
   server_url = "http://" + server_ipaddress + ":" + server_port + server_root_endpoint
   loaddb_url = server_url + loaddb_endpoint
   id_url = server_url + id_endpoint
@@ -531,6 +556,11 @@ def run_printenv(log):
   print >> log, "# requests    :"+ str(request) +"  (Default value = 10000)"
   print >> log, "# concurrency    :"+ str(concurrency) +"  (Default value = 200)"
   print >> log, "#  URLs  :" +str(total_urls) +"  (Default value = 100)"
+  print >> log, "# Use HTML: %s (Default value = False)" % use_html
+  if http_headers:
+    print >> log, "# Extra HTTP headers:"
+    for hh in http_headers:
+      print >> log, "# ", hh
 
   if not get_endpoints_urls:
     print >> log, "#  get url ratio:%s  (Default value = 80)" % get_ratio
@@ -994,7 +1024,8 @@ def execute_request(pool, queue=None):
             run_mode,
             temp_log,
             'text/html' if use_html else 'application/json',
-            queue
+            queue,
+            http_headers
           ]
 
         if(int(concurrency) == 1):

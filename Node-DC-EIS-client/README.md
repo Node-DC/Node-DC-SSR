@@ -15,6 +15,7 @@ This client directory contains,
      -2 modes: time based run which is the default(1) and request based run (2)
  - node_els-testurls.py - The benchmark driver file which sends actual requests using python's requests module.
  - config.json - The input client configuration file. This file is used by runspec.py when run with -f option
+ - config-ssr.json - The input client configuration file for SSR workloads. This file is used by runspec.py when run with -f option
  - process_time_based_output.py - Script to post process and summarize time based run data
      - Creates temporary log files for every given interval which is post processed to create a summary.
  - summary_file_sample.txt - Sample file of the summary file that is generated after a run.
@@ -23,12 +24,11 @@ This client directory contains,
 
 ## Client help:
       - Run the main script “python runspec.py <optional parameters example -t, -n, -c ,-h>”.
-        - You will need to change the IP address and port of your server in ‘runspec.py’ or in config.json. 
+        - You will need to change the IP address and port of your server in config.json or config-ssr.json. 
         - Takes additional command line parameters.
         - Default parameters in the script or can be read from a configuration file with -f/--config option (command line has the maximum priority).
         - h gives the available options.
         - Configurable option -g or --showgraph for graph generation(1 to generate output graphs or 0 for no graph)
-        - the server ip address and port can be changed in config.json or directly in runspec.py
         - This script sends requests using python's requests module, generates log file and generates output graphs.
 
  
