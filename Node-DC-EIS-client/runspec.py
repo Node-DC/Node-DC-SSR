@@ -23,6 +23,7 @@ import numpy as np
 import random
 from random import seed, shuffle
 import eventlet
+eventlet.sleep()  # workaround for eventlet bug in version 0.21.0
 requests = eventlet.import_patched('requests.__init__')
 import requests
 import glob
