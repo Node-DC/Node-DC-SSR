@@ -12,14 +12,16 @@ If you want to contribute code to a project, first you need to fork the project.
 
 This is second in a series of upcoming workloads for modeling use cases of Node.js in Data Center (Node-DC). This workload is modeling server side rendering use cases.
 
+Node-DC-SSR-electrode is built on top of the [@WalmartLabs Electrode Universal React/Node Application Framework](http://www.electrode.io/site/web.html).
+
 # Node-DC-SSR
 Node-DC-SSR consists of two components: a client and a Node.js server.
 
 ## Client (Node-DC-EIS-client)
 Client controls various phases like ramp-up, measurement and ramp-down as well as issues requests, tracks response time and errors. At the end of run, it validates the runs and post-processes the transactions log producing final metrics and graphs.
 
-## Node.js server
-Node.js server accepts all requests from client and responds back after .
+## Node.js server (Node-DC-SSR-electrode)
+Node.js server accepts all requests from client and responds back after generating HTML code.
 
 # Node-DC-SSR Metrics  
 Node-DC-SSR produces two primary metrics:
@@ -60,7 +62,7 @@ Most parameters can be set in the client configuration file and these are passed
   - "address": HOST_IP environmental variable or '0.0.0.0', // Listening address for server
   - "port": PORT environmental variable or 3000, // Listening port for server
 
-# Node-DC-SSR Endpoints
+# Node-DC-SSR-electrode Endpoints
 
 This workload has three endpoints
 
