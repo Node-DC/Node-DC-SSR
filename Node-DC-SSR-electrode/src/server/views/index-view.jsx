@@ -6,7 +6,7 @@ import ReduxRouterEngine from 'electrode-redux-router-engine';
 import {routes} from '../../client/routes';
 import {createStore} from 'redux';
 import rootReducer from '../../client/reducers';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+// import injectTapEventPlugin from 'react-tap-event-plugin';
 import {generateProduct} from '../data/generator';
 import {config} from 'electrode-confippet';
 
@@ -42,7 +42,7 @@ module.exports = (req) => {
 
   const app = req.server && req.server.app || req.app;
   if (!app.routesEngine) {
-    injectTapEventPlugin();
+    // injectTapEventPlugin();
     app.routesEngine = new ReduxRouterEngine({routes, createReduxStore});
   }
 

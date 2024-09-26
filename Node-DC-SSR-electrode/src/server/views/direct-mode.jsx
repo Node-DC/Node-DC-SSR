@@ -4,7 +4,7 @@ import { renderToString } from 'react-dom/server';
 import { match, RouterContext } from 'react-router'
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+// import injectTapEventPlugin from 'react-tap-event-plugin';
 import { ArgumentParser } from 'argparse';
 import format from 'python-format';
 import { routes } from '../../client/routes';
@@ -70,7 +70,7 @@ user-agent: ${args.userAgent}`);
     } else if (redirectLocation) {
       console.log('Error: 302');
     } else if (renderProps) {
-      injectTapEventPlugin();
+      // injectTapEventPlugin();
       global.navigator = global.navigator || {};
       global.navigator.userAgent = args.userAgent;
 

@@ -9,9 +9,9 @@ import { Router, browserHistory } from 'react-router';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+// import injectTapEventPlugin from 'react-tap-event-plugin';
 
-injectTapEventPlugin();
+// injectTapEventPlugin();
 
 window.webappStart = () => {
   const initialState = window.__PRELOADED_STATE__;
